@@ -4,11 +4,11 @@ import com.netcracker.hackathon.entity.Car;
 import com.netcracker.hackathon.entity.DoorsState;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.repository.CarRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CarService {
@@ -22,12 +22,12 @@ public class CarService {
         this.userService = userService;
     }
 
-    public List<Car> getCarsByUserId(UUID userId){
+    public List<Car> getCarsByUserId(ObjectId userId){
         User user = userService.getUserById(userId);
         return (List<Car>) carRepository.findAllById(user.getCars());
     }
 
-    public Car getCarById(UUID carId) {
+    public Car getCarById(ObjectId carId) {
         return null;
     }
 
@@ -51,7 +51,7 @@ public class CarService {
 
     }
 
-    public void deleteCarById(UUID carId) {
+    public void deleteCarById(ObjectId carId) {
 
     }
 
@@ -59,11 +59,11 @@ public class CarService {
 
     }
 
-    public Car getCarDoorState(UUID carId) {
+    public Car getCarDoorState(ObjectId carId) {
         return null;
     }
 
-    public void addUserToCar(UUID carId, String phoneNumber) {
+    public void addUserToCar(ObjectId carId, String phoneNumber) {
         
     }
 }

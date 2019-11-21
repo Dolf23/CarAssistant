@@ -2,6 +2,7 @@ package com.netcracker.hackathon.service;
 
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.repository.UserRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserById(UUID userId) {
+    public User getUserById(ObjectId userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -43,7 +44,7 @@ public class UserService {
         userRepository.findByPhoneNumber(user.getPhoneNumber()).ifPresent(value -> userRepository.delete(value));
     }
 
-    public void deleteUserById(UUID userId) {
+    public void deleteUserById(ObjectId userId) {
         userRepository.deleteById(userId);
     }
 }

@@ -3,11 +3,9 @@ package com.netcracker.hackathon.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
-import java.util.UUID;
 
 @Document(collection = "cars")
 @Getter
@@ -15,7 +13,7 @@ import java.util.UUID;
 @ToString
 public class Car {
     @Id
-    private UUID carId;
+    private ObjectId carId;
     private String plateNumber;
     private String name;
     private String doorsState;

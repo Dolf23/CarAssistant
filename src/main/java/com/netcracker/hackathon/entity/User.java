@@ -4,9 +4,11 @@ package com.netcracker.hackathon.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "users")
 @Getter
@@ -14,26 +16,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 public class User {
     @Id
-    private ObjectId id;
-    private String name;
+    private UUID userId;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
     private String email;
-    private String password;
+    private List<Car> cars;
 
     public User() {
     }
 
     public User(User user) {
-        this.setName(user.getName());
-        this.setEmail(user.getEmail());
-        this.setPassword(user.getPassword());
-    }
-
-    public void updateUser(User user){
-        if (!this.getName().equals(user.getName()))
-            this.setName(user.getName());
-        if (!this.getEmail().equals(user.getEmail()))
-            this.setEmail(user.getEmail());
-        if (!this.getPassword().equals(user.getPassword()))
-            this.setPassword(user.getPassword());
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.phoneNumber = user.getPhoneNumber();
+        this.email = user.getEmail();
     }
 }

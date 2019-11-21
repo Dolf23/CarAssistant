@@ -6,8 +6,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     @Autowired
@@ -17,8 +15,8 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public User getUserByName(String name){
-        return userRepository.findByName(name).orElse(null);
+    public User getUserByName(String firstName, String lastName){
+        return userRepository.findByFirstNameAndLastName(firstName, lastName).orElse(null);
     }
 
     public User createUser(User user){
@@ -27,13 +25,11 @@ public class UserService {
     }
 
     public User updateUser(User user){
-        Optional<User> updatedUser = userRepository.findByName(user.getName());
-        updatedUser.ifPresent(value -> value.updateUser(user));
-        return updatedUser.map(value -> userRepository.save(value)).orElse(null);
+        return userRepository.save(user);
     }
 
     public void deleteUser(User user){
-        userRepository.findByName(user.getName()).ifPresent(value -> userRepository.delete(value));
+        userRepository.findByPhoneNumber(user.getPhoneNumber()).ifPresent(value -> userRepository.delete(value));
     }
 
     public void deleteUserById(ObjectId userId){

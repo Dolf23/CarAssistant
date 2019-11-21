@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Car {
     @Id
     private UUID carId;
+    private String plateNumber;
     private String name;
-    private String state;
-    private List<User> users;
+    private String doorsState;
 }

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 @Configuration("hackathon-conf")
 public class BeanConfig {
-    private String DB_NAME = "sample_mflix";
+    private String DB_NAME = "car_assistant";
     private String USER = "sysadm";
     private String PASSWORD = "netcracker";
     private String URL = "mongodb+srv://" + USER + ":" + PASSWORD + "@clusterd-x8yri.mongodb.net/test?retryWrites=true&w=majority";

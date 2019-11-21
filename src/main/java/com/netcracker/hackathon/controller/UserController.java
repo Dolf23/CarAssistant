@@ -1,24 +1,30 @@
 package com.netcracker.hackathon.controller;
 
+import com.netcracker.hackathon.controller.RequestBody.PhoneNumberRequestBody;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping(path = "/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable(value = "userId") ObjectId userId){
+    public ResponseEntity<User> getUserById(@PathVariable(value = "userId") UUID userId){
         log.info("Get user with id={}", userId);
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
@@ -30,7 +36,13 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByName(firstName, lastName), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(path = "/login")
+    public ResponseEntity<User> getUserByPhone(@RequestBody PhoneNumberRequestBody request){
+        log.info("Get user by phone={}", request);
+        return new ResponseEntity<>(userService.getUserByPhone(request.getPhoneNumber()), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/register")
     public ResponseEntity<User> createUser(@RequestBody User user){
         log.info("Create user {}", user.toString());
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
@@ -50,7 +62,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{userId}")
-    public ResponseEntity deleteUserById(@PathVariable(value = "userId") ObjectId userId){
+    public ResponseEntity deleteUserById(@PathVariable(value = "userId") UUID userId){
         log.info("Delete user with id={}", userId);
         userService.deleteUserById(userId);
         return new ResponseEntity(HttpStatus.OK);

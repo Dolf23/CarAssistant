@@ -2,6 +2,7 @@ package com.netcracker.hackathon.controller;
 
 import com.netcracker.hackathon.service.CarService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class CarController {
     }
 
     @GetMapping(path = "/users/{userId}")
-    public ResponseEntity getCarsOfUser(@PathVariable(value = "userId")UUID userId){
+    public ResponseEntity getCarsOfUser(@PathVariable(value = "userId") ObjectId userId){
         return new ResponseEntity(carService.getCarsByUserId(userId), HttpStatus.OK);
     }
 }

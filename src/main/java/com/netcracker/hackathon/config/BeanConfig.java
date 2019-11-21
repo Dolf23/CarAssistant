@@ -17,7 +17,16 @@ public class BeanConfig {
     private String DB_NAME = "car_assistant";
     private String USER = "sysadm";
     private String PASSWORD = "netcracker";
-    private String URL = "mongodb+srv://" + USER + ":" + PASSWORD + "@clusterd-x8yri.mongodb.net/test?retryWrites=true&w=majority";
+    private String URL = "mongodb://" + USER + ":" + PASSWORD +
+            "@clusterhack-shard-00-00-x8yri.mongodb.net:27017," +
+            "clusterhack-shard-00-01-x8yri.mongodb.net:27017," +
+            "clusterhack-shard-00-02-x8yri.mongodb.net:27017" +
+            "/test?" +
+            "ssl=true&" +
+            "replicaSet=ClusterHack-shard-0&" +
+            "authSource=admin&" +
+            "retryWrites=true&" +
+            "w=majority&";
 
     @Bean
     public MongoDbFactory mongoDbFactory() {

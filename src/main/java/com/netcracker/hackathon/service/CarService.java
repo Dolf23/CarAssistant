@@ -72,12 +72,10 @@ public class CarService {
     }
 
     public Car getCarDoorState(String carId) {
-        return null;
+        return getCarById(carId);
     }
 
-    public void addUserToCar(String carId, String phoneNumber) {
-        
-    }
+
 
     public List<String> setCarToUser(String carId, String phone){
         Car car = carRepository.findById(carId).orElse(new Car());

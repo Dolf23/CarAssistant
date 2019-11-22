@@ -40,8 +40,8 @@ public class CarService {
         return carRepository.insert(car);
     }
 
-    public CarWithPhonesResponseBody loginCar(String plateNumder) {
-        Car car = carRepository.findByPlateNumber(plateNumder).orElse(null);
+    public CarWithPhonesResponseBody loginCar(String plateNumber) {
+        Car car = carRepository.findByPlateNumber(plateNumber).orElse(null);
         List<String> phones = userService.getUsersPhonesByCarId(car.getCarId());
         CarWithPhonesResponseBody responseBody = new CarWithPhonesResponseBody();
         responseBody.setCar(car);

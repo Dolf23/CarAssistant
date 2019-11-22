@@ -2,6 +2,7 @@ package com.netcracker.hackathon.controller;
 
 import com.netcracker.hackathon.controller.request.CarToUserRequestBody;
 import com.netcracker.hackathon.controller.request.DoorsStateRequestBody;
+import com.netcracker.hackathon.controller.request.PhoneNumberRequestBody;
 import com.netcracker.hackathon.controller.request.PlateNumberRequestBody;
 import com.netcracker.hackathon.entity.Car;
 import com.netcracker.hackathon.service.CarService;
@@ -44,8 +45,8 @@ public class CarController {
     }
 
     @PostMapping(path = "/{carId}/addUser")
-    public ResponseEntity addCarToUser(@PathVariable String carId, @RequestBody CarToUserRequestBody request){
-        return new ResponseEntity(carService.setCarToUser(request.getCarId(), request.getPhone()), HttpStatus.OK);
+    public ResponseEntity addCarToUser(@PathVariable String carId, @RequestBody PhoneNumberRequestBody request){
+        return new ResponseEntity(carService.setCarToUser(carId, request.getPhoneNumber()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/api/cars/{carId}/deleteUser")

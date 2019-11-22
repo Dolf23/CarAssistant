@@ -1,6 +1,9 @@
 package com.netcracker.hackathon.service;
 
+import com.netcracker.hackathon.controller.response.UserWithCarsResponseBody;
+import com.netcracker.hackathon.entity.Car;
 import com.netcracker.hackathon.entity.User;
+import com.netcracker.hackathon.repository.CarRepository;
 import com.netcracker.hackathon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
+    private CarRepository carRepository;
     private UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(CarRepository carRepository, UserRepository userRepository) {
+        this.carRepository = carRepository;
         this.userRepository = userRepository;
     }
 
@@ -48,6 +53,15 @@ public class UserService {
     }
 
     public List<String> getUsersPhonesByCarId(String carId){
-        return userRepository.findByCarsIn(carId).stream().map(User::getPhoneNumber).collect(Collectors.toList());
+        return userRepository.findByCarIdsIn(carId).stream().map(User::getPhoneNumber).collect(Collectors.toList());
+    }
+
+    public UserWithCarsResponseBody getUserWithIds(String phone){
+        User user = getUserByPhone(phone);
+        List<Car> cars = (List<Car>) carRepository.findAllById(user.getCarIds());
+        UserWithCarsResponseBody responseBody = new UserWithCarsResponseBody();
+        responseBody.setUser(user);
+        responseBody.setCars(cars);
+        return responseBody;
     }
 }

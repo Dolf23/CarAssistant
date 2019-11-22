@@ -21,7 +21,7 @@ public class User {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private List<String> cars = Collections.emptyList();
+    private List<String> carIds = Collections.emptyList();
 
     public User() {
     }

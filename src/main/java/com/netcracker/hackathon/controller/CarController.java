@@ -48,6 +48,11 @@ public class CarController {
         return new ResponseEntity(carService.setCarToUser(request.getCarId(), request.getPhone()), HttpStatus.OK);
     }
 
+    @PostMapping(path = "/api/cars/{carId}/deleteUser")
+    public ResponseEntity deleteCarToUser(@PathVariable String carId, @RequestBody CarToUserRequestBody request){
+        return new ResponseEntity(carService.deleteCarToUser(request.getCarId(), request.getPhone()), HttpStatus.OK);
+    }
+
     @PostMapping(path = "/login")
     public ResponseEntity loginCar(@RequestBody PlateNumberRequestBody requestBody){
         return new ResponseEntity(carService.loginCar(requestBody.getPlateNumber()), HttpStatus.OK);

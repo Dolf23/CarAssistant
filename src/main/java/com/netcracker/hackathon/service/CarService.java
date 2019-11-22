@@ -2,7 +2,6 @@ package com.netcracker.hackathon.service;
 
 import com.netcracker.hackathon.controller.response.CarWithPhonesResponseBody;
 import com.netcracker.hackathon.entity.Car;
-import com.netcracker.hackathon.entity.DoorsState;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class CarService {
     }
 
     public Car getCarByPlateNumber(String plateNumber) {
-        return null;
+        return carRepository.findByPlateNumber(plateNumber).orElse(null);
     }
 
     public Car registerCar(Car car) {
@@ -64,11 +63,11 @@ public class CarService {
     }
 
     public void deleteCarById(String carId) {
-
+        deleteCar(getCarById(carId));
     }
 
-    public void changeCarDoorsState(DoorsState doorsState) {
-
+    public void changeCarDoorsState(Car car, String doorsState) {
+        car.setDoorsState(doorsState);
     }
 
     public Car getCarDoorState(String carId) {
@@ -82,5 +81,12 @@ public class CarService {
         User user = userService.getUserByPhone(phone);
         user.getCars().add(car.getCarId());
         return userService.updateUser(user).getCars();
+    }
+
+    public Car deleteCarToUser(String carId, String phone) {
+        Car car = carRepository.findById(carId).get();
+        User user = userService.getUserByPhone(phone);
+        user.getCars().remove(car);
+        return car;
     }
 }

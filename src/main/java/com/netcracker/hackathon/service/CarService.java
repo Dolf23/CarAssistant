@@ -2,7 +2,6 @@ package com.netcracker.hackathon.service;
 
 import com.netcracker.hackathon.controller.response.CarWithPhonesResponseBody;
 import com.netcracker.hackathon.entity.Car;
-import com.netcracker.hackathon.entity.DoorsState;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,6 @@ public class CarService {
         return carRepository.findById(carId).orElse(null);
     }
 
-    public Car getCarByPlateNumber(String plateNumber) {
-        return null;
-    }
-
     public Car registerCar(Car car) {
         Car persistantCar = new Car(car);
         return carRepository.insert(car);
@@ -49,34 +44,10 @@ public class CarService {
         return responseBody;
     }
 
-    public Car updateCar(Car car) {
-        return null;
-    }
-
     public Car updateCar(String carId, String doorsState) {
         Car car = carRepository.findById(carId).orElse(new Car());
         car.setDoorsState(doorsState);
         return carRepository.save(car);
-    }
-
-    public void deleteCar(Car car) {
-
-    }
-
-    public void deleteCarById(String carId) {
-
-    }
-
-    public void changeCarDoorsState(DoorsState doorsState) {
-
-    }
-
-    public Car getCarDoorState(String carId) {
-        return null;
-    }
-
-    public void addUserToCar(String carId, String phoneNumber) {
-        
     }
 
     public CarWithPhonesResponseBody setCarToUser(String carId, String phone){
@@ -87,10 +58,10 @@ public class CarService {
         return loginCar(car.getPlateNumber());
     }
 
-public CarWithPhonesResponseBody deleteCarToUser(String carId, String phone) {
+public CarWithPhonesResponseBody removeCarToUser(String carId, String phone) {
         Car car = carRepository.findById(carId).get();
         User user = userService.getUserByPhone(phone);
-        user.getCarIds().remove(car);
+        user.getCarIds().remove(car.getCarId());
         List<String> phones = userService.getUsersPhonesByCarId(car.getCarId());
         CarWithPhonesResponseBody responseBody = new CarWithPhonesResponseBody();
         responseBody.setCar(car);

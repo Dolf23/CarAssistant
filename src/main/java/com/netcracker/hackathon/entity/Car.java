@@ -3,7 +3,6 @@ package com.netcracker.hackathon.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,10 +10,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-public class Car {
+public class Car{
     @Id
-    private ObjectId carId;
+    private String carId;
     private String plateNumber;
     private String name;
     private String doorsState;
+
+    public Car(){}
+
+    public Car(Car car) {
+        this.plateNumber = car.getPlateNumber();
+        this.name = car.getName();
+        this.doorsState = car.getDoorsState();
+    }
 }

@@ -2,11 +2,11 @@ package com.netcracker.hackathon.service;
 
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.repository.UserRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserById(ObjectId userId) {
+    public User getUserById(String userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -27,13 +27,12 @@ public class UserService {
     }
 
     public User getUserByPhone(String phone) {
-//        new NotFoundException("User with phone number " + phone + " not found.")
         return userRepository.findByPhoneNumber(phone).orElse(null);
     }
 
     public User createUser(User user) {
         User persistentUser = new User(user);
-        return userRepository.save(persistentUser);
+        return userRepository.insert(persistentUser);
     }
 
     public User updateUser(User user) {
@@ -44,7 +43,11 @@ public class UserService {
         userRepository.findByPhoneNumber(user.getPhoneNumber()).ifPresent(value -> userRepository.delete(value));
     }
 
-    public void deleteUserById(ObjectId userId) {
+    public void deleteUserById(String userId) {
         userRepository.deleteById(userId);
+    }
+
+    public List<String> getUsersPhonesByCarId(String carId){
+        return userRepository.findByCarsIn(carId).stream().map(User::getPhoneNumber).collect(Collectors.toList());
     }
 }

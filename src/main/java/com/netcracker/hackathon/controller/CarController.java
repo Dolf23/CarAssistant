@@ -1,17 +1,15 @@
 package com.netcracker.hackathon.controller;
 
+import com.netcracker.hackathon.controller.request.CarToUserRequestBody;
+import com.netcracker.hackathon.controller.request.DoorsStateRequestBody;
+import com.netcracker.hackathon.controller.request.PlateNumberRequestBody;
+import com.netcracker.hackathon.entity.Car;
 import com.netcracker.hackathon.service.CarService;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -25,8 +23,33 @@ public class CarController {
         this.carService = carService;
     }
 
+    @PostMapping(path = "/register")
+    public ResponseEntity createCar(@RequestBody Car car){
+        return new ResponseEntity(carService.registerCar(car), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/{carId}/state")
+    public ResponseEntity getCarById(@PathVariable String carId){
+        return new ResponseEntity(carService.getCarById(carId), HttpStatus.OK);
+    }
+
     @GetMapping(path = "/users/{userId}")
-    public ResponseEntity getCarsOfUser(@PathVariable(value = "userId") ObjectId userId){
+    public ResponseEntity getCarsOfUser(@PathVariable(value = "userId") String userId){
         return new ResponseEntity(carService.getCarsByUserId(userId), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/{carId}/state")
+    public ResponseEntity changeDoorsState(@PathVariable String carId, @RequestBody DoorsStateRequestBody request){
+        return new ResponseEntity(carService.updateCar(carId, request.getDoorsState()), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/{carId}/addUser")
+    public ResponseEntity addCarToUser(@PathVariable String carId, @RequestBody CarToUserRequestBody request){
+        return new ResponseEntity(carService.setCarToUser(request.getCarId(), request.getPhone()), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity loginCar(@RequestBody PlateNumberRequestBody requestBody){
+        return new ResponseEntity(carService.loginCar(requestBody.getPlateNumber()), HttpStatus.OK);
     }
 }

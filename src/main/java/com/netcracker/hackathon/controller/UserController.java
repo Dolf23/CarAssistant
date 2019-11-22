@@ -1,10 +1,9 @@
 package com.netcracker.hackathon.controller;
 
-import com.netcracker.hackathon.controller.RequestBody.PhoneNumberRequestBody;
+import com.netcracker.hackathon.controller.request.PhoneNumberRequestBody;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping(path = "/hello")
+    public ResponseEntity helloWorld(){
+        return new ResponseEntity("Hello Hackathon!!!", HttpStatus.OK);
+    }
+
     @GetMapping(path = "/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable(value = "userId") ObjectId userId){
+    public ResponseEntity<User> getUserById(@PathVariable(value = "userId") String userId){
         log.info("Get user with id={}", userId);
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
@@ -61,9 +65,11 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{userId}")
-    public ResponseEntity deleteUserById(@PathVariable(value = "userId") ObjectId userId){
+    public ResponseEntity deleteUserById(@PathVariable(value = "userId") String userId){
         log.info("Delete user with id={}", userId);
         userService.deleteUserById(userId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 }

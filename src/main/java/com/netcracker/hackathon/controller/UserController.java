@@ -43,7 +43,11 @@ public class UserController {
     @PostMapping(path = "/login")
     public ResponseEntity<UserWithCarsResponseBody> getUserByPhone(@RequestBody PhoneNumberRequestBody request){
         log.info("Get user by phone={}", request);
-        return new ResponseEntity<>(userService.getUserWithIds(request.getPhoneNumber()), HttpStatus.OK);
+        UserWithCarsResponseBody responseBody = userService.getUserWithIds(request.getPhoneNumber());
+        if (responseBody != null)
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(path = "/register")

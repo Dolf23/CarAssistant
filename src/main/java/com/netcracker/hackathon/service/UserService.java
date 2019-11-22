@@ -58,6 +58,8 @@ public class UserService {
 
     public UserWithCarsResponseBody getUserWithIds(String phone){
         User user = getUserByPhone(phone);
+        if (user == null)
+            return null;
         List<Car> cars = (List<Car>) carRepository.findAllById(user.getCarIds());
         UserWithCarsResponseBody responseBody = new UserWithCarsResponseBody();
         responseBody.setUser(user);

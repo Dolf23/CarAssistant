@@ -24,7 +24,7 @@ public class CarService {
 
     public List<Car> getCarsByUserId(String userId){
         User user = userService.getUserById(userId);
-        return (List<Car>) carRepository.findAllById(user.getCars());
+        return (List<Car>) carRepository.findAllById(user.getCarIds());
     }
 
     public Car getCarById(String carId) {
@@ -45,7 +45,7 @@ public class CarService {
         List<String> phones = userService.getUsersPhonesByCarId(car.getCarId());
         CarWithPhonesResponseBody responseBody = new CarWithPhonesResponseBody();
         responseBody.setCar(car);
-        responseBody.setPhones(phones);
+        responseBody.setPhoneNumbers(phones);
         return responseBody;
     }
 
@@ -79,10 +79,12 @@ public class CarService {
         
     }
 
-    public List<String> setCarToUser(String carId, String phone){
+    public CarWithPhonesResponseBody setCarToUser(String carId, String phone){
         Car car = carRepository.findById(carId).orElse(new Car());
         User user = userService.getUserByPhone(phone);
-        user.getCars().add(car.getCarId());
-        return userService.updateUser(user).getCars();
+        user.getCarIds().add(car.getCarId());
+        userService.updateUser(user);
+        return loginCar(car.getPlateNumber());
     }
+
 }

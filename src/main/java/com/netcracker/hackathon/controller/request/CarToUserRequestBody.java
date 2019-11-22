@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarToUserRequestBody {
     private String carId;
-    private String phone;
+    private String phoneNumber;
 }

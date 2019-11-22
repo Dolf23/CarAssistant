@@ -1,6 +1,7 @@
 package com.netcracker.hackathon.controller;
 
 import com.netcracker.hackathon.controller.request.PhoneNumberRequestBody;
+import com.netcracker.hackathon.controller.response.UserWithCarsResponseBody;
 import com.netcracker.hackathon.entity.User;
 import com.netcracker.hackathon.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,9 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<User> getUserByPhone(@RequestBody PhoneNumberRequestBody request){
+    public ResponseEntity<UserWithCarsResponseBody> getUserByPhone(@RequestBody PhoneNumberRequestBody request){
         log.info("Get user by phone={}", request);
-        return new ResponseEntity<>(userService.getUserByPhone(request.getPhoneNumber()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserWithIds(request.getPhoneNumber()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/register")

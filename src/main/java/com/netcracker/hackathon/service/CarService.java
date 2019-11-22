@@ -87,4 +87,15 @@ public class CarService {
         return loginCar(car.getPlateNumber());
     }
 
+public CarWithPhonesResponseBody deleteCarToUser(String carId, String phone) {
+        Car car = carRepository.findById(carId).get();
+        User user = userService.getUserByPhone(phone);
+        user.getCarIds().remove(car);
+        List<String> phones = userService.getUsersPhonesByCarId(car.getCarId());
+        CarWithPhonesResponseBody responseBody = new CarWithPhonesResponseBody();
+        responseBody.setCar(car);
+        responseBody.setPhoneNumbers(phones);
+        userService.updateUser(user);
+        return responseBody;
+    }
 }

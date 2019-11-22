@@ -91,6 +91,7 @@ public class CarService {
         CarWithPhonesResponseBody responseBody = new CarWithPhonesResponseBody();
         responseBody.setCar(car);
         responseBody.setPhones(phones);
+        userService.updateUser(user);
         return responseBody;
     }
 }

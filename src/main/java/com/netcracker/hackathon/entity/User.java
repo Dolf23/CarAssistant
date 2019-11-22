@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Collections;
 import java.util.List;
 
 @Document(collection = "users")
@@ -20,7 +21,7 @@ public class User {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private List<String> cars;
+    private List<String> cars = Collections.emptyList();
 
     public User() {
     }

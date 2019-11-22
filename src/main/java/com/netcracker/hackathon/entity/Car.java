@@ -15,7 +15,7 @@ public class Car{
     private String carId;
     private String plateNumber;
     private String name;
-    private String doorsState;
+    private String doorsState = DoorsState.UNLOCKED;
 
     public Car(){}
 

@@ -51,7 +51,7 @@ public class CarController {
 
     @PostMapping(path = "/api/cars/{carId}/deleteUser")
     public ResponseEntity deleteCarToUser(@PathVariable String carId, @RequestBody CarToUserRequestBody request){
-        return new ResponseEntity(carService.deleteCarToUser(request.getCarId(), request.getPhone()), HttpStatus.OK);
+        return new ResponseEntity(carService.deleteCarToUser(request.getCarId(), request.getPhoneNumber()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/login")

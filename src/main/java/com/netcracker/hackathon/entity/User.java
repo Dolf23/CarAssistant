@@ -4,7 +4,6 @@ package com.netcracker.hackathon.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,12 +15,12 @@ import java.util.List;
 @ToString
 public class User {
     @Id
-    private ObjectId userId;
+    private String userId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
-    private List<ObjectId> cars;
+    private List<String> cars;
 
     public User() {
     }

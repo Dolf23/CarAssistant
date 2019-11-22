@@ -1,4 +1,4 @@
-package com.netcracker.hackathon.controller.RequestBody;
+package com.netcracker.hackathon.controller.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

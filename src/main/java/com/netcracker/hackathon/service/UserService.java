@@ -62,6 +62,6 @@ public class UserService {
         UserWithCarsResponseBody responseBody = new UserWithCarsResponseBody();
         responseBody.setUser(user);
         responseBody.setCars(cars);
-        return null;
+        return responseBody;
     }
 }

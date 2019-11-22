@@ -59,7 +59,7 @@ public class CarService {
     }
 
 public CarWithPhonesResponseBody removeCarToUser(String carId, String phone) {
-        Car car = carRepository.findById(carId).get();
+        Car car = getCarById(carId);
         User user = userService.getUserByPhone(phone);
         user.getCarIds().remove(car.getCarId());
         List<String> phones = userService.getUsersPhonesByCarId(car.getCarId());

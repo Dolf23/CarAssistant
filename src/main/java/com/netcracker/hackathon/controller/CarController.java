@@ -30,7 +30,7 @@ public class CarController {
     }
 
     @GetMapping(path = "/{carId}/state")
-    public ResponseEntity getCarById(@PathVariable String carId){
+    public ResponseEntity getCarById(@PathVariable(value = "carId") String carId){
         return new ResponseEntity(carService.getCarById(carId), HttpStatus.OK);
     }
 
@@ -40,12 +40,12 @@ public class CarController {
     }
 
     @PostMapping(path = "/{carId}/state")
-    public ResponseEntity changeDoorsState(@PathVariable String carId, @RequestBody DoorsStateRequestBody request){
+    public ResponseEntity changeDoorsState(@PathVariable(value = "carId") String carId, @RequestBody DoorsStateRequestBody request){
         return new ResponseEntity(carService.updateCar(carId, request.getDoorsState()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/{carId}/addUser")
-    public ResponseEntity addCarToUser(@PathVariable String carId, @RequestBody PhoneNumberRequestBody request){
+    public ResponseEntity addCarToUser(@PathVariable(value = "carId") String carId, @RequestBody PhoneNumberRequestBody request){
         return new ResponseEntity(carService.setCarToUser(carId, request.getPhoneNumber()), HttpStatus.OK);
     }
 
@@ -54,8 +54,8 @@ public class CarController {
         return new ResponseEntity(carService.loginCar(requestBody.getPlateNumber()), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/api/cars/{carId}/removeUser")
-    public ResponseEntity deleteCarToUser(@PathVariable String carId, @RequestBody CarToUserRequestBody request){
-        return new ResponseEntity(carService.removeCarToUser(request.getCarId(), request.getPhoneNumber()), HttpStatus.OK);
+    @PostMapping(path = "/{carId}/removeUser")
+    public ResponseEntity deleteCarToUser(@PathVariable(value = "carId") String carId, @RequestBody CarToUserRequestBody request){
+        return new ResponseEntity(carService.removeCarToUser(carId, request.getPhoneNumber()), HttpStatus.OK);
     }
 }
